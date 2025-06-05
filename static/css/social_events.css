@@ -1,0 +1,316 @@
+/* Social Events Page Styling */
+:root {
+    --primary-color: #6dabe4;
+    --secondary-color: #4292dc;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+/* Navbar */
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Events Container */
+.events-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.events-header h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.create-event-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.create-event-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-btn:hover {
+    color: var(--text-color);
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.location-btn {
+    background-color: var(--light-bg);
+    border: 1px solid #ddd;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#locationDisplay {
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.submit-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Events Grid */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.event-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.event-header {
+    margin-bottom: 1rem;
+}
+
+.event-header h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+}
+
+.event-date {
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.event-details {
+    margin-bottom: 1.5rem;
+}
+
+.event-description {
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.event-info span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.event-participants {
+    margin-bottom: 1rem;
+}
+
+.participants-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.event-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.join-btn,
+.leave-btn {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.leave-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.join-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.leave-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .events-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.event-title {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.event-title:hover {
+    color: var(--primary-color);
+}

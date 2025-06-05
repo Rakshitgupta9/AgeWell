@@ -1,0 +1,212 @@
+.guide-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.guide-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.guide-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.guide-title i {
+    font-size: 2.5rem;
+}
+
+.guide-title i.fa-whatsapp {
+    color: #25D366;
+    /* WhatsApp color */
+}
+
+.guide-title i.fa-youtube {
+    color: #FF0000;
+    /* YouTube red color */
+}
+
+.guide-title h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.guide-description {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.guide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.guide-section {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guide-section h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.guide-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.guide-card:last-child {
+    margin-bottom: 0;
+}
+
+.guide-card h3 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.step-number {
+    background: #25D366;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step p {
+    margin: 0;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+.step ul {
+    margin: 0.5rem 0 0 1.5rem;
+    color: #2c3e50;
+}
+
+.guide-navigation {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: #f8f9fa;
+    color: #2c3e50;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #e9ecef;
+    transform: translateX(-5px);
+}
+
+/* Navbar Styles */
+.navbar {
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6dabe4;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .guide-container {
+        padding: 1rem;
+    }
+
+    .guide-title h1 {
+        font-size: 2rem;
+    }
+
+    .guide-description {
+        font-size: 1rem;
+    }
+
+    .guide-section {
+        padding: 1.5rem;
+    }
+
+    .guide-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .guide-card {
+        padding: 1rem;
+    }
+
+    .navbar {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+}

@@ -1,0 +1,239 @@
+/* Auth Pages Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-container {
+    width: 900px;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.auth-content {
+    display: flex;
+    padding: 75px 0;
+}
+
+.auth-form {
+    width: 50%;
+    padding: 0 75px;
+}
+
+.auth-image {
+    width: 50%;
+    background: url('../images/bg.png') no-repeat center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 33px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 0;
+    font-family: Poppins;
+    box-sizing: border-box;
+    background: transparent;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-bottom: 1px solid #222;
+    outline: none;
+}
+
+.form-group label {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: #999;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+/* Animation for floating labels */
+.form-group input:focus~label,
+.form-group input:not(:placeholder-shown)~label,
+.form-group select:focus~label,
+.form-group select:not([value=""])~label {
+    top: -20px;
+    font-size: 14px;
+    color: #222;
+}
+
+/* Add placeholder to inputs */
+.form-group input::placeholder {
+    color: transparent;
+}
+
+/* For select elements */
+.form-group select {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.form-group select:focus~label,
+.form-group select:not([value=""])~label {
+    top: -20px;
+    font-size: 14px;
+    color: #222;
+}
+
+.form-submit {
+    display: block !important;
+    background-color: #6dabe4 !important;
+    color: #000000 !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 15px 39px !important;
+    border-radius: 5px !important;
+    margin-top: 25px !important;
+    cursor: pointer !important;
+    font-family: Poppins !important;
+    font-size: 16px !important;
+    transition: background-color 0.3s ease !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+.form-submit:hover {
+    background-color: #4292dc !important;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-link a {
+    color: #6dabe4;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .auth-container {
+        width: calc(100% - 30px);
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .auth-content {
+        flex-direction: column;
+    }
+
+    .auth-form,
+    .auth-image {
+        width: 100%;
+    }
+
+    .auth-form {
+        padding: 30px;
+    }
+
+    .auth-image {
+        min-height: 300px;
+    }
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.flash-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.flash-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.flash-message.warning {
+    background-color: #fff3e0;
+    color: #ef6c00;
+    border: 1px solid #ffe0b2;
+}
+
+.flash-message.info {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #bbdefb;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Error Styling */
+.form-group.has-error input,
+.form-group.has-error select {
+    border-bottom: 1px solid #c62828;
+}
+
+.form-group.has-error label {
+    color: #c62828;
+}
+
+.error-message {
+    color: #c62828;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}

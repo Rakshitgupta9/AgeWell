@@ -1,0 +1,469 @@
+/* Dashboard Styling */
+:root {
+    --primary-color: #6dabe4;
+    --secondary-color: #4292dc;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+/* Navbar */
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Welcome Section */
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.welcome-section p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05),
+        0 6px 6px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #0D8ABC, #3498db);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1),
+        0 10px 10px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #0D8ABC, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.feature-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.feature-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #0D8ABC, #3498db);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(13, 138, 188, 0.2);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.feature-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 138, 188, 0.3);
+    color: white;
+}
+
+.feature-btn:hover::before {
+    left: 100%;
+}
+
+/* Emergency Button */
+.emergency-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emergency-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+}
+
+.emergency-btn i {
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .emergency-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .feature-card p {
+        font-size: 1rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.dashboard-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dashboard-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.dashboard-card:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.dashboard-card:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.dashboard-card:nth-child(6) {
+    animation-delay: 1s;
+}
+
+/* Notifications Styles */
+.notifications-dropdown {
+    position: relative;
+    margin-right: 1.5rem;
+}
+
+.notification-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.notification-btn:hover {
+    color: var(--primary-color);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.notifications-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.notifications-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.notifications-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notifications-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.mark-all-read {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.mark-all-read:hover {
+    background: rgba(13, 138, 188, 0.1);
+}
+
+.notifications-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item.unread {
+    background: rgba(13, 138, 188, 0.05);
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-content p {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.notification-time {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.unread-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    margin-top: 0.5rem;
+}
+
+.no-notifications {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Add a small arrow at the top of the notifications menu */
+.notifications-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+/* Scrollbar styling */
+.notifications-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notifications-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.notifications-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.notifications-list::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .notifications-menu {
+        width: 300px;
+        right: -10px;
+    }
+
+    .notifications-menu::before {
+        right: 30px;
+    }
+}

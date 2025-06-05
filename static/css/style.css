@@ -1,0 +1,209 @@
+/* Custom Variables */
+:root {
+    --primary-color: #0D8ABC;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --transition-speed: 0.3s;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f8fa;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Enhanced Card Styles */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Bar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease-out;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::after {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), #0a6d8a);
+    border: none;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+}
+
+/* Form Elements */
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+    transition: all var(--transition-speed);
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 138, 188, 0.25);
+    border-color: var(--primary-color);
+}
+
+/* Profile Page Specific */
+.profile-picture {
+    transition: transform var(--transition-speed);
+}
+
+.profile-picture:hover {
+    transform: scale(1.05);
+}
+
+.profile-picture .btn-camera {
+    transition: all var(--transition-speed);
+}
+
+.profile-picture .btn-camera:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    animation: scaleIn 0.5s ease-out;
+}
+
+.list-group-item {
+    border: none;
+    padding: 1rem;
+    transition: all var(--transition-speed);
+}
+
+.list-group-item:hover {
+    background-color: rgba(13, 138, 188, 0.1);
+    transform: translateX(5px);
+}
+
+/* Alert Messages */
+.alert {
+    border: none;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
