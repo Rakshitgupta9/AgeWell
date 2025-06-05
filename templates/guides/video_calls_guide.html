@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}Video Calls Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    .platform-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+    }
+
+    .platform-icon.zoom {
+        color: #2D8CFF;
+    }
+
+    .platform-icon.meet {
+        color: #00897B;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fas fa-video"></i>
+            <h1>Video Calls Guide</h1>
+        </div>
+        <p class="guide-description">Learn how to use popular video calling platforms and manage your device settings.
+        </p>
+    </div>
+
+    <div class="guide-content">
+        <!-- Zoom Section -->
+        <section class="guide-section">
+            <h2><i class="fas fa-video platform-icon zoom"></i>Zoom</h2>
+
+            <div class="guide-card">
+                <h3>Getting Started with Zoom</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Download and install Zoom</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Create your Zoom account</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/T4JyqCLCdwU" title="Download and Install Zoom"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Download and Install Zoom</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/QOUwumKCW7M" title="Create Zoom Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create a Zoom Account</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Joining Zoom Meetings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Join using a meeting link</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Join using a meeting ID</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/9isp3qPeQ0E" title="Join Zoom Meeting with Link"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Join a Zoom Meeting Using a Link</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/NIYudDeULlw" title="Join Zoom Meeting with ID"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Join a Zoom Meeting Using a Meeting ID</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google Meet Section -->
+        <section class="guide-section">
+            <h2><i class="fas fa-video platform-icon meet"></i>Google Meet</h2>
+
+            <div class="guide-card">
+                <h3>Getting Started with Google Meet</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Download and install Google Meet</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Create your Google account</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/tv-yXjfDY2I" title="Download and Install Google Meet"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Download and Install Google Meet</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/E41zE1VconQ" title="Create Google Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create a Google Account</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Using Google Meet</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Start a new meeting</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Join an existing meeting</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/sUTYQIDv1rk" title="Start Google Meet"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Start a Google Meet</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/X4jAvaX73-U" title="Join Google Meet"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Join a Google Meet</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Device Settings Section -->
+        <section class="guide-section">
+            <h2><i class="fas fa-cog"></i>Device Settings</h2>
+
+            <div class="guide-card">
+                <h3>Camera Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Choose camera device</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Adjust video quality</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Enable/disable video</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/gmOJKCyNVTk" title="Camera Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Choose Camera Device & Adjust Video Quality</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/9isp3qPeQ0E" title="Enable/Disable Video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Enable/Disable Video</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Microphone Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Select audio device</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Test microphone</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Mute/unmute audio</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/6fIYWnfTc5o" title="Microphone Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Select Audio Device & Test Microphone</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/9isp3qPeQ0E" title="Mute/Unmute Audio"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Mute/Unmute Audio</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section class="guide-section">
+            <h2><i class="fas fa-wrench"></i>Troubleshooting</h2>
+
+            <div class="guide-card">
+                <h3>Common Issues and Solutions</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Camera not working</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Audio problems</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Connection issues</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/jpidDCm-6pQ" title="Camera Not Working"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Fix Camera Not Working</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/6fIYWnfTc5o" title="Audio Problems"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Fix Audio Problems</div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/QOUwumKCW7M" title="Connection Issues"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Fix Connection Issues</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

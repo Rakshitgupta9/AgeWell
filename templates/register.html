@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AgeWell</title>
+    <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💙</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0D8ABC;
+            --secondary-color: #0B7AAB;
+            --light-blue: #E3F2FD;
+            --text-color: #333;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .register-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .register-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #666;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .required::after {
+            content: " *";
+            color: #dc3545;
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">AgeWell</div>
+        <div class="nav-links">
+            <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+        </div>
+    </nav>
+
+    <div id="notification" class="notification"></div>
+
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1>Create Your Account</h1>
+                <p>Join AgeWell to connect with your community</p>
+            </div>
+
+            <form id="registerForm" action="{{ url_for('register') }}" method="POST">
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" class="required">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="required">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone" class="required">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <div class="form-text">Enter a valid 10-digit phone number</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age" class="required">Age</label>
+                            <input type="number" id="age" name="age" min="0" max="120" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gender" class="required">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role" class="required">Role</label>
+                            <select id="role" name="role" required>
+                                <option value="">Select Role</option>
+                                <option value="elder">Senior Citizen</option>
+                                <option value="child">Family Member</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Address Information</h2>
+                    <div class="form-group">
+                        <label for="address" class="required">Street Address</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" class="required">City</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state" class="required">State</label>
+                            <input type="text" id="state" name="state" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pincode" class="required">PIN Code</label>
+                            <input type="text" id="pincode" name="pincode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergency_contact">Emergency Contact</label>
+                            <input type="tel" id="emergency_contact" name="emergency_contact">
+                            <div class="form-text">Optional: Phone number of a trusted contact</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Account Security</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password" class="required">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <div class="form-text">Must be at least 6 characters long</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password" class="required">Confirm Password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" id="parentSection" style="display: none;">
+                    <h2>Parent Information</h2>
+                    <div class="form-group">
+                        <label for="parent_email" class="required">Parent's Email</label>
+                        <input type="email" id="parent_email" name="parent_email">
+                        <div class="form-text">Enter the email of your linked senior citizen</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            if (type === 'error') {
+                notification.style.background = '#dc3545';
+            } else if (type === 'info') {
+                notification.style.background = '#17a2b8';
+            } else {
+                notification.style.background = '#28a745';
+            }
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Show/hide parent section based on role
+        const roleSelect = document.getElementById('role');
+        const parentSection = document.getElementById('parentSection');
+        const parentEmailInput = document.getElementById('parent_email');
+
+        roleSelect.addEventListener('change', function () {
+            if (this.value === 'child') {
+                parentSection.style.display = 'block';
+                parentEmailInput.required = true;
+            } else {
+                parentSection.style.display = 'none';
+                parentEmailInput.required = false;
+            }
+        });
+
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const phone = document.getElementById('phone').value;
+            const pincode = document.getElementById('pincode').value;
+            const age = document.getElementById('age').value;
+
+            // Password validation
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                e.preventDefault();
+                showNotification('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            // Phone validation
+            if (!phone.match(/^\d{10}$/)) {
+                e.preventDefault();
+                showNotification('Please enter a valid 10-digit phone number', 'error');
+                return;
+            }
+
+            // PIN code validation
+            if (!pincode.match(/^\d{6}$/)) {
+                e.preventDefault();
+                showNotification('Please enter a valid 6-digit PIN code', 'error');
+                return;
+            }
+
+            // Age validation
+            const ageNum = parseInt(age);
+            if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
+                e.preventDefault();
+                showNotification('Please enter a valid age (0-120)', 'error');
+                return;
+            }
+
+            // Parent email validation for family members
+            if (roleSelect.value === 'child') {
+                const parentEmail = document.getElementById('parent_email').value;
+                if (!parentEmail) {
+                    e.preventDefault();
+                    showNotification('Please enter parent\'s email address', 'error');
+                    return;
+                }
+            }
+        });
+
+        // Show any flash messages
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        showNotification('{{ message }}', '{{ category }}');
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+
+</html>

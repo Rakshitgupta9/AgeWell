@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}Online Payments Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fas fa-credit-card"></i>
+            <h1>Online Payments Guide</h1>
+        </div>
+        <p class="guide-description">Learn about safe online payment methods, digital banking, and security best
+            practices.</p>
+    </div>
+
+    <div class="guide-content">
+        <section class="guide-section">
+            <h2>Understanding UPI</h2>
+            <div class="guide-card">
+                <h3>What is UPI?</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>UPI (Unified Payments Interface) is a real-time payment system that allows instant money
+                            transfers between bank accounts</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Popular UPI apps include:
+                        <ul>
+                            <li>Google Pay</li>
+                            <li>PhonePe</li>
+                            <li>Paytm</li>
+                            <li>BHIM</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/oH6k4DET860" title="What is UPI"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Understanding UPI</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Setting Up UPI</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Download your preferred UPI app from the app store</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Register using your mobile number</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Link your bank account</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <p>Create a UPI PIN</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/t6ggSBAlSWE" title="Setting Up UPI"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Set Up UPI</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Net Banking</h2>
+            <div class="guide-card">
+                <h3>Getting Started with Net Banking</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Visit your bank's official website</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Click on "Net Banking" or "Internet Banking"</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Register for net banking if you haven't already</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <p>Set up your login credentials and security questions</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4rEiNVSJWR0" title="Getting Started with Net Banking"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Get Started with Net Banking</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Digital Wallets</h2>
+            <div class="guide-card">
+                <h3>Popular Digital Wallets</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Paytm
+                        <ul>
+                            <li>Download the Paytm app</li>
+                            <li>Create an account</li>
+                            <li>Add money to your wallet</li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Amazon Pay
+                        <ul>
+                            <li>Access through Amazon app</li>
+                            <li>Link your bank account</li>
+                            <li>Add money to wallet</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/7sc1jjpT4FI" title="Popular Digital Wallets"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Understanding Digital Wallets</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Security Tips</h2>
+            <div class="guide-card">
+                <h3>Safe Online Payment Practices</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Never share your OTP, PIN, or password with anyone</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Always use secure websites (look for 'https://')</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Enable two-factor authentication when available</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <p>Regularly check your transaction history</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <p>Keep your apps and devices updated</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/sQzvPOv3Esc" title="Safe Online Payment Practices"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Safe Online Payment Practices</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

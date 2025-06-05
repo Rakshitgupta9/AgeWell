@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block title %}WhatsApp Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fab fa-whatsapp"></i>
+            <h1>WhatsApp Guide</h1>
+        </div>
+        <p class="guide-description">Learn how to use WhatsApp effectively - from basic messaging to advanced features.
+        </p>
+    </div>
+
+    <div class="guide-content">
+        <div class="guide-section">
+            <h2>Getting Started with WhatsApp</h2>
+            <div class="guide-card">
+                <h3>1. Installing WhatsApp</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Open your smartphone's app store (Google Play Store for Android or App Store for iPhone)</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Search for "WhatsApp"</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Tap "Install" or "Get"</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <p>Wait for the installation to complete</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/yAXpKP7JxEQ" title="How to Install WhatsApp"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Install WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>2. Setting Up Your Account</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Open WhatsApp after installation</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Enter your phone number when prompted</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Verify your number using the code sent via SMS</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <p>Add your name and profile picture (optional)</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/x4tDUQpuVLQ" title="Setting Up WhatsApp Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Setting Up Your WhatsApp Account</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Basic Messaging</h2>
+            <div class="guide-card">
+                <h3>Sending Messages</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Tap the chat icon (message bubble) in the bottom right</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Select a contact from your list</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Type your message in the text box at the bottom</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <p>Tap the send button (paper plane icon)</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/en60X-fbJAU" title="Sending Messages on WhatsApp"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Send Messages on WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Sending Media</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Open a chat</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Tap the paperclip icon</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Choose what you want to send:
+                        <ul>
+                            <li>Document</li>
+                            <li>Camera</li>
+                            <li>Gallery</li>
+                            <li>Audio</li>
+                            <li>Location</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/OZMxlkflzgI" title="Sending Media on WhatsApp"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Send Media on WhatsApp</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Voice and Video Calls</h2>
+            <div class="guide-card">
+                <h3>Making a Voice Call</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Open the chat with the person you want to call</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Tap the phone icon at the top</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Wait for the person to answer</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/PKXHIMb0HVw" title="Making Voice Calls on WhatsApp"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Make Voice Calls on WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Making a Video Call</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Open the chat with the person you want to call</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Tap the video camera icon at the top</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Wait for the person to answer</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/QkvlYq9TazU" title="Making Video Calls on WhatsApp"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Make Video Calls on WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Screen Sharing in Video Calls</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Start a video call</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Tap the screen share icon during the call</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Select what you want to share</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/ryum7kcRsj0"
+                        title="Screen Sharing in WhatsApp Video Calls"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Share Screen in WhatsApp Video Calls</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2>Groups</h2>
+            <div class="guide-card">
+                <h3>Creating a Group</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Tap the three dots menu in the top right</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>Select "New group"</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>Select contacts to add to the group</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <p>Add a group name and photo</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Y2zE4_78BF8" title="Creating WhatsApp Groups"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create WhatsApp Groups</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

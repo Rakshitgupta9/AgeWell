@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}YouTube Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fab fa-youtube"></i>
+            <h1>YouTube Guide</h1>
+        </div>
+        <p class="guide-description">Master YouTube - from watching videos to creating your own channel.</p>
+    </div>
+
+    <div class="guide-content">
+        <section class="guide-section">
+            <h2>Getting Started with YouTube</h2>
+            <div class="guide-card">
+                <h3>Creating a YouTube Account</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Sign up for a Google account</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Access YouTube and sign in</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dx2LzTkd_6w" title="Creating a YouTube Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create a YouTube Account</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Creating a YouTube Channel</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Set up your channel</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Customize your channel</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/zs_J9pnNhvw" title="Creating a YouTube Channel"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create a YouTube Channel</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Basic YouTube Features</h2>
+            <div class="guide-card">
+                <h3>Subscribing to Channels</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Find a channel you like</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Click the Subscribe button</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/9cEBAC9jWFQ" title="Subscribing to Channels"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Subscribe to YouTube Channels</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Creating Playlists</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Save videos to a playlist</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Organize your playlists</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/lnyZv9Vslts" title="Creating Playlists"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create YouTube Playlists</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Video Interaction</h2>
+            <div class="guide-card">
+                <h3>Playing and Controlling Videos</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Play/Pause videos</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Use full screen mode</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Navigate the timeline</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/f_XF3tt6n-M" title="Playing Videos"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Play and Control Videos</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Full Screen and Navigation</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Enter full screen mode</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Use timeline controls</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/xRtHEHfkCck" title="Full Screen Mode"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Using Full Screen Mode</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Video Timeline Controls</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Navigate the timeline</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Fast forward/backward</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/uxg6OrseLa8" title="Timeline Navigation"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Using Video Timeline Controls</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Search and Interaction</h2>
+            <div class="guide-card">
+                <h3>Using the Search Bar</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Find videos using search</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Use search filters</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/xyJ2L7-7NBg" title="Using Search Bar"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Use YouTube Search</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Commenting and Sharing</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Leave comments on videos</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Share videos with others</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/BfkHDJHtvtQ" title="Commenting on Videos"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Comment on Videos</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Sharing Videos</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Share via different platforms</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Copy video links</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/buTGo3JZuH4" title="Sharing Videos"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Share YouTube Videos</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

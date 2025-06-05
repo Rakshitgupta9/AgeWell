@@ -1,0 +1,536 @@
+{% extends "base.html" %}
+
+{% block title %}Regular Expenses - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .expenses-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .expenses-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .expenses-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .expenses-title i {
+        font-size: 2rem;
+        color: #2D8CFF;
+    }
+
+    .expenses-description {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .expenses-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .add-expense-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .expenses-list-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #2D8CFF;
+        outline: none;
+    }
+
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background: #2D8CFF;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: 100%;
+    }
+
+    .submit-btn:hover {
+        background: #1a7ae8;
+    }
+
+    .expenses-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .expense-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        transition: background 0.3s;
+    }
+
+    .expense-item:hover {
+        background: #f8f9fa;
+    }
+
+    .expense-details {
+        flex: 1;
+    }
+
+    .expense-name {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+
+    .expense-description {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .expense-amount {
+        font-weight: 600;
+        color: #2D8CFF;
+        margin-left: 1rem;
+    }
+
+    .expense-date {
+        font-size: 0.8rem;
+        color: #999;
+        margin-top: 0.25rem;
+    }
+
+    .expense-summary {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .summary-title {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .summary-item {
+        text-align: center;
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .summary-item h3 {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-item p {
+        color: #2D8CFF;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        transition: color 0.3s;
+    }
+
+    .back-btn:hover {
+        color: #2D8CFF;
+    }
+
+    .delete-btn {
+        color: #dc3545;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-left: 1rem;
+        transition: color 0.3s;
+    }
+
+    .delete-btn:hover {
+        color: #c82333;
+    }
+
+    .chart-container {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .chart-title {
+        font-size: 1.2rem;
+        color: #333;
+        margin: 0;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 400px;
+        margin: 1rem 0;
+    }
+
+    .chart-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }
+
+    .legend-text {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .legend-amount {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .legend-percentage {
+        font-size: 0.8rem;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="expenses-container">
+    <a href="{{ url_for('finance_management') }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Finance Management
+    </a>
+
+    <div class="expenses-header">
+        <div class="expenses-title">
+            <i class="fas fa-shopping-cart"></i>
+            <h1>Regular Expenses</h1>
+        </div>
+        <p class="expenses-description">Track your daily expenses and manage your budget effectively</p>
+    </div>
+
+    <div class="expenses-grid">
+        <!-- Add Expense Form -->
+        <div class="add-expense-section">
+            <h2>Add New Expense</h2>
+            <form id="expenseForm" method="POST" action="{{ url_for('add_regular_expense') }}">
+                <div class="form-group">
+                    <label for="expenseName">Expense Name</label>
+                    <input type="text" id="expenseName" name="expenseName" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseAmount">Amount (₹)</label>
+                    <input type="number" id="expenseAmount" name="expenseAmount" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategory">Category</label>
+                    <select id="expenseCategory" name="expenseCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="dining">Dining Out</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDescription">Description</label>
+                    <textarea id="expenseDescription" name="expenseDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDate">Date</label>
+                    <input type="date" id="expenseDate" name="expenseDate" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus"></i>
+                    Add Expense
+                </button>
+            </form>
+        </div>
+
+        <!-- Expenses List -->
+        <div class="expenses-list-section">
+            <h2>Recent Expenses</h2>
+            <ul class="expenses-list">
+                {% for expense in expenses %}
+                <li class="expense-item">
+                    <div class="expense-details">
+                        <div class="expense-name">{{ expense.name }}</div>
+                        <div class="expense-description">{{ expense.description }}</div>
+                        <div class="expense-date">{{ expense.date.strftime('%B %d, %Y') }}</div>
+                    </div>
+                    <div class="expense-amount">₹{{ expense.amount }}</div>
+                    <button class="delete-btn" onclick="deleteExpense('{{ expense._id }}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Monthly Summary -->
+    <div class="expense-summary">
+        <h2 class="summary-title">Monthly Summary</h2>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <h3>Total Expenses This Month</h3>
+                <p>₹{{ monthly_total }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Average Daily Expense</h3>
+                <p>₹{{ daily_average }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Highest Expense Category</h3>
+                <p>{{ highest_category }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Remaining Budget</h3>
+                <p>₹{{ remaining_budget }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this after the expenses list section -->
+    <div class="chart-container">
+        <div class="chart-header">
+            <h2 class="chart-title">Spending by Category</h2>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="expensePieChart"></canvas>
+        </div>
+        <div class="chart-legend" id="chartLegend">
+            <!-- Legend items will be dynamically added here -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function deleteExpense(expenseId) {
+        if (confirm('Are you sure you want to delete this expense?')) {
+            fetch(`/delete-expense/${expenseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting expense: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error deleting expense');
+                });
+        }
+    }
+
+    // Set default date to today
+    document.getElementById('expenseDate').valueAsDate = new Date();
+
+    // Function to format currency
+    function formatCurrency(amount) {
+        return '₹' + amount.toLocaleString('en-IN', {
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2
+        });
+    }
+
+    // Function to calculate percentage
+    function calculatePercentage(value, total) {
+        return ((value / total) * 100).toFixed(1);
+    }
+
+    // Function to generate random color
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Initialize pie chart
+    function initializePieChart() {
+        const ctx = document.getElementById('expensePieChart').getContext('2d');
+
+        // Get category data from the server
+        const categoryData = {{ category_data| tojson
+    }};
+    const totalAmount = {{ total_amount }};
+
+    // Prepare data for the chart
+    const labels = categoryData.map(item => item.category);
+    const data = categoryData.map(item => item.amount);
+    const backgroundColors = categoryData.map(() => getRandomColor());
+
+    // Create the pie chart
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false // We'll create our own custom legend
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const value = context.raw;
+                            const percentage = calculatePercentage(value, totalAmount);
+                            return `${context.label}: ${formatCurrency(value)} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Create custom legend
+    const legendContainer = document.getElementById('chartLegend');
+    categoryData.forEach((item, index) => {
+        const percentage = calculatePercentage(item.amount, totalAmount);
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        legendItem.innerHTML = `
+                <div class="legend-color" style="background-color: ${backgroundColors[index]}"></div>
+                <div class="legend-text">
+                    ${item.category}
+                    <div class="legend-amount">${formatCurrency(item.amount)}</div>
+                    <div class="legend-percentage">${percentage}% of total</div>
+                </div>
+            `;
+        legendContainer.appendChild(legendItem);
+    });
+    }
+
+    // Initialize the chart when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        initializePieChart();
+    });
+</script>
+{% endblock %}

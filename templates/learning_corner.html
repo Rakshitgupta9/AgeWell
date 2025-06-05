@@ -1,0 +1,673 @@
+{% extends "base.html" %}
+
+{% block title %}Learning Corner - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/learning_corner.css') }}">
+<style>
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2D8CFF;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .nav-brand:hover {
+        color: #1a7ae8;
+    }
+
+    .nav-brand i {
+        font-size: 1.8rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="nav-brand">
+        <i class="fas fa-heartbeat"></i>
+        AgeWell
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="learning-corner-container">
+    <div class="welcome-section">
+        <h1>Welcome to the Learning Corner</h1>
+        <p>Explore our comprehensive guides and tutorials to enhance your digital skills.</p>
+
+        <!-- Search Bar Section -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search for topics, features, or skills...">
+            </div>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="my-requests-btn" onclick="showMyRequests()">
+                <i class="fas fa-list"></i> My Requests
+            </button>
+        </div>
+    </div>
+
+    <!-- My Requests Section -->
+    <div id="myRequestsSection" class="my-requests-section" style="display: none;">
+        <div class="section-header">
+            <h2>My Tutorial Requests</h2>
+            <button class="close-btn" onclick="hideMyRequests()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="requests-container">
+            {% for request in user_requests %}
+            <div class="request-card">
+                <div class="request-header">
+                    <h3>{{ request.topic }}</h3>
+                    <span class="status-badge status-{{ request.status }}">
+                        {{ request.status|title }}
+                    </span>
+                </div>
+                <div class="request-details">
+                    <p><strong>Category:</strong> {{ request.category }}</p>
+                    <p><strong>Difficulty:</strong> {{ request.difficulty }}</p>
+                    <p><strong>Platform:</strong> {{ request.platform }}</p>
+                    <p><strong>Submitted:</strong> {{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                </div>
+                <div class="request-description">
+                    <p><strong>Description:</strong></p>
+                    <p>{{ request.description }}</p>
+                    {% if request.additional_notes %}
+                    <p><strong>Additional Notes:</strong></p>
+                    <p>{{ request.additional_notes }}</p>
+                    {% endif %}
+                </div>
+                {% if request.admin_notes %}
+                <div class="admin-response">
+                    <p><strong>Admin Response:</strong></p>
+                    <p>{{ request.admin_notes }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .my-requests-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .my-requests-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .my-requests-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .requests-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .request-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .request-header h3 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .request-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .request-description {
+            margin-bottom: 1rem;
+        }
+
+        .admin-response {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-in-progress {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 1.5rem auto;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .search-result-item h4 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .search-result-item p {
+            margin: 0 0 0.5rem 0;
+            color: #666;
+        }
+
+        .result-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .result-topics .topic-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .no-results-message {
+            padding: 1.5rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .no-results-message h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results-message p {
+            margin-bottom: 1rem;
+        }
+
+        .request-suggestion-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .request-suggestion-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <div class="topics-grid">
+        <!-- WhatsApp Card -->
+        <div class="topic-card" data-topics="Basic Messaging Voice/Video Calls Groups Media Sharing"
+            data-href="{{ url_for('whatsapp_guide') }}">
+            <div class="topic-icon">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <h3>WhatsApp Guide</h3>
+            <p>Learn how to use WhatsApp effectively - from basic messaging to advanced features.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">Basic Messaging</span>
+                <span class="topic-tag">Voice/Video Calls</span>
+                <span class="topic-tag">Groups</span>
+                <span class="topic-tag">Media Sharing</span>
+            </div>
+        </div>
+
+        <!-- YouTube Card -->
+        <div class="topic-card" data-topics="Video Watching Subscriptions Playlists Channel Creation"
+            data-href="{{ url_for('youtube_guide') }}">
+            <div class="topic-icon">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <h3>YouTube Guide</h3>
+            <p>Master YouTube - from watching videos to creating your own channel.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">Video Watching</span>
+                <span class="topic-tag">Subscriptions</span>
+                <span class="topic-tag">Playlists</span>
+                <span class="topic-tag">Channel Creation</span>
+            </div>
+        </div>
+
+        <!-- Online Payments Card -->
+        <div class="topic-card" data-topics="UPI Net Banking Digital Wallets Security Tips"
+            data-href="{{ url_for('payments_guide') }}">
+            <div class="topic-icon">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            <h3>Online Payments</h3>
+            <p>Learn about safe online payment methods and digital banking.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">UPI</span>
+                <span class="topic-tag">Net Banking</span>
+                <span class="topic-tag">Digital Wallets</span>
+                <span class="topic-tag">Security Tips</span>
+            </div>
+        </div>
+
+        <!-- Social Media Card -->
+        <div class="topic-card" data-topics="Facebook Instagram Privacy Sharing"
+            data-href="{{ url_for('social_media_guide') }}">
+            <div class="topic-icon">
+                <i class="fas fa-share-alt"></i>
+            </div>
+            <h3>Social Media</h3>
+            <p>Connect with friends and family through various social media platforms.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">Facebook</span>
+                <span class="topic-tag">Instagram</span>
+                <span class="topic-tag">Privacy</span>
+                <span class="topic-tag">Sharing</span>
+            </div>
+        </div>
+
+        <!-- Smartphone Basics Card -->
+        <div class="topic-card" data-topics="Settings Apps Camera Security"
+            data-href="{{ url_for('smartphone_guide') }}">
+            <div class="topic-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Smartphone Basics</h3>
+            <p>Essential smartphone skills and features for everyday use.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">Settings</span>
+                <span class="topic-tag">Apps</span>
+                <span class="topic-tag">Camera</span>
+                <span class="topic-tag">Security</span>
+            </div>
+        </div>
+
+        <!-- Video Calls Card -->
+        <div class="topic-card" data-topics="Zoom Google Meet Settings Troubleshooting"
+            data-href="{{ url_for('video_calls_guide') }}">
+            <div class="topic-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <h3>Video Calls</h3>
+            <p>Learn to make and manage video calls on different platforms.</p>
+            <div class="topic-topics">
+                <span class="topic-tag">Zoom</span>
+                <span class="topic-tag">Google Meet</span>
+                <span class="topic-tag">Settings</span>
+                <span class="topic-tag">Troubleshooting</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Request Tutorial Modal -->
+<div id="requestModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Request a Tutorial</h2>
+            <span class="close-modal" onclick="closeRequestModal()">&times;</span>
+        </div>
+        <form id="tutorialRequestForm" action="{{ url_for('submit_tutorial_request') }}" method="POST">
+            <div class="form-group">
+                <label for="topic">Topic Title*</label>
+                <input type="text" id="topic" name="topic" required placeholder="e.g., How to use Instagram Reels">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category*</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="social_media">Social Media</option>
+                    <option value="messaging">Messaging Apps</option>
+                    <option value="video_calls">Video Calls</option>
+                    <option value="payments">Online Payments</option>
+                    <option value="smartphone">Smartphone Basics</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Detailed Description*</label>
+                <textarea id="description" name="description" required
+                    placeholder="Please describe what you'd like to learn in detail. For example: 'I want to learn how to create and share Instagram Reels, including adding music and effects.'"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="difficulty">Difficulty Level*</label>
+                <select id="difficulty" name="difficulty" required>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="platform">Platform/Device*</label>
+                <input type="text" id="platform" name="platform" required
+                    placeholder="e.g., iPhone 12, Android Phone, Windows PC">
+            </div>
+
+            <div class="form-group">
+                <label for="additional_notes">Additional Notes</label>
+                <textarea id="additional_notes" name="additional_notes"
+                    placeholder="Any specific requirements or preferences you'd like to mention"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" onclick="closeRequestModal()">Cancel</button>
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Add click handlers to topic cards
+    document.querySelectorAll('.topic-card').forEach(card => {
+        card.addEventListener('click', function () {
+            const href = this.getAttribute('data-href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+
+        // Existing hover effects
+        card.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+        });
+
+        card.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+        });
+    });
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const cards = document.querySelectorAll('.topic-card');
+
+    searchInput.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        searchResults.innerHTML = '';
+
+        if (searchTerm.length < 2) {
+            searchResults.style.display = 'none';
+            return;
+        }
+
+        const matches = [];
+        cards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const topics = card.getAttribute('data-topics').toLowerCase();
+
+            if (title.includes(searchTerm) ||
+                description.includes(searchTerm) ||
+                topics.includes(searchTerm)) {
+                matches.push({
+                    title: card.querySelector('h3').textContent,
+                    description: card.querySelector('p').textContent,
+                    topics: card.getAttribute('data-topics'),
+                    element: card
+                });
+            }
+        });
+
+        if (matches.length > 0) {
+            searchResults.style.display = 'block';
+            matches.forEach(match => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                resultItem.innerHTML = `
+                    <h4>${match.title}</h4>
+                    <p>${match.description}</p>
+                    <div class="result-topics">
+                        ${match.topics.split(' ').map(topic =>
+                    `<span class="topic-tag">${topic}</span>`
+                ).join('')}
+                    </div>
+                `;
+                resultItem.addEventListener('click', () => {
+                    match.element.click();
+                });
+                searchResults.appendChild(resultItem);
+            });
+        } else {
+            // Show no results message with suggestion
+            searchResults.style.display = 'block';
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.className = 'no-results-message';
+            noResultsDiv.innerHTML = `
+                <h4>No matching topics found</h4>
+                <p>We couldn't find any topics matching "${searchTerm}"</p>
+                <button class="request-suggestion-btn" onclick="openRequestModal()">
+                    <i class="fas fa-plus-circle"></i> Request a Tutorial
+                </button>
+            `;
+            searchResults.appendChild(noResultsDiv);
+        }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // Modal functionality
+    function openRequestModal() {
+        document.getElementById('requestModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeRequestModal() {
+        document.getElementById('requestModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+        const modal = document.getElementById('requestModal');
+        if (event.target == modal) {
+            closeRequestModal();
+        }
+    }
+
+    // Form submission handling
+    document.getElementById('tutorialRequestForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Show loading state
+        const submitBtn = this.querySelector('.submit-btn');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        submitBtn.disabled = true;
+
+        // Submit form
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Your tutorial request has been submitted successfully!');
+                    closeRequestModal();
+                    this.reset();
+                } else {
+                    alert('There was an error submitting your request. Please try again.');
+                }
+            })
+            .catch(error => {
+                alert('There was an error submitting your request. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = 'Submit Request';
+                submitBtn.disabled = false;
+            });
+    });
+
+    function showMyRequests() {
+        document.getElementById('myRequestsSection').style.display = 'block';
+        // Scroll to the section
+        document.getElementById('myRequestsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideMyRequests() {
+        document.getElementById('myRequestsSection').style.display = 'none';
+    }
+</script>
+{% endblock %}

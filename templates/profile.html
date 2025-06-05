@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - AgeWell</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💙</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0D8ABC;
+            --secondary-color: #0B7AAB;
+            --light-blue: #E3F2FD;
+            --text-color: #333;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .profile-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: #666;
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+
+        .profile-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .form-group input:read-only,
+        .form-group select:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-blue);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .password-section {
+            border-top: 1px solid #eee;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .linked-elder {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .linked-elder h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .linked-elder p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .close {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        /* Star Rating Styles */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover~label,
+        .star-rating input:checked~label {
+            color: #ffd700;
+        }
+
+        /* Form Styles */
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .star-rating label {
+                font-size: 1.5rem;
+            }
+        }
+
+        .linked-users {
+            margin-top: 1rem;
+        }
+
+        .linked-user-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .linked-user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .linked-user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .linked-user-role {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: var(--light-blue);
+            color: var(--primary-color);
+        }
+
+        .linked-user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">AgeWell</div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div id="notification" class="notification"></div>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    {{ user.name[0]|upper }}
+                </div>
+                <div class="profile-info">
+                    <h1>{{ user.name }}</h1>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+
+            <form id="profileForm" action="{{ url_for('update_profile') }}" method="POST">
+                <div class="profile-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" value="{{ user.name }}" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" value="{{ user.phone }}" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" value="{{ user.age }}" readonly min="0" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" disabled>
+                            <option value="male" {% if user.gender=='male' %}selected{% endif %}>Male</option>
+                            <option value="female" {% if user.gender=='female' %}selected{% endif %}>Female</option>
+                            <option value="other" {% if user.gender=='other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if user.role == 'elder' and linked_children %}
+                <div class="profile-section">
+                    <h2>Linked Family Members</h2>
+                    <div class="linked-users">
+                        {% for child in linked_children %}
+                        <div class="linked-user-card">
+                            <div class="linked-user-header">
+                                <div class="linked-user-name">{{ child.name }}</div>
+                                <span class="linked-user-role">{{ child.role|title }}</span>
+                            </div>
+                            <div class="linked-user-details">
+                                <div class="info-group">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value">{{ child.email }}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">Phone</div>
+                                    <div class="info-value">{{ child.phone }}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">Age</div>
+                                    <div class="info-value">{{ child.age }}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">Gender</div>
+                                    <div class="info-value">{{ child.gender|title }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="profile-section password-section" id="passwordSection" style="display: none;">
+                    <h2>Change Password</h2>
+                    <div class="form-group">
+                        <label for="current_password">Current Password</label>
+                        <input type="password" id="current_password" name="current_password">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" id="editBtn" class="btn btn-outline">Edit Profile</button>
+                    <button type="button" id="changePasswordBtn" class="btn btn-outline">Change Password</button>
+                    <button type="button" id="feedbackBtn" class="btn btn-outline">Feedback/Complaint</button>
+                    <div id="saveButtons" style="display: none;">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" id="cancelBtn" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if user.role == 'child' and linked_elder %}
+        <div class="profile-card">
+            <div class="profile-section">
+                <h2>Linked Elder</h2>
+                <div class="linked-elder">
+                    <h3>{{ linked_elder.name }}</h3>
+                    <p><i class="fas fa-envelope"></i> {{ linked_elder.email }}</p>
+                    <p><i class="fas fa-phone"></i> {{ linked_elder.phone }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Feedback/Complaint</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="feedbackForm" action="{{ url_for('submit_feedback') }}" method="POST"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="feedbackType">Type</label>
+                    <select id="feedbackType" name="type" required>
+                        <option value="feedback">Feedback</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="suggestion">Suggestion</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label for="star5" title="5 stars">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="4 stars">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="3 stars">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="2 stars">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="1 star">★</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackMessage">Message</label>
+                    <textarea id="feedbackMessage" name="message" rows="4" required
+                        placeholder="Please describe your feedback or complaint in detail..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackFile">Attachment (Optional)</label>
+                    <input type="file" id="feedbackFile" name="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <small>Supported formats: PDF, DOC, DOCX, JPG, PNG (Max size: 5MB)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackPriority">Priority</label>
+                    <select id="feedbackPriority" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-outline" id="cancelFeedback">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show any pending notifications when the page loads
+        {% if notifications %}
+        {% for notification in notifications %}
+        showNotification("{{ notification.message|escape('js') }}", "{{ notification.type|escape('js') }}");
+        {% endfor %}
+        {% endif %}
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            if (type === 'error') {
+                notification.style.background = '#dc3545';
+            } else if (type === 'info') {
+                notification.style.background = '#17a2b8';
+            } else {
+                notification.style.background = '#28a745';
+            }
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Profile Edit Functionality
+        const editBtn = document.getElementById('editBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveButtons = document.getElementById('saveButtons');
+        const form = document.getElementById('profileForm');
+        const inputs = form.querySelectorAll('input:not([type="password"]), select');
+
+        // Store original values
+        const originalValues = {};
+        inputs.forEach(input => {
+            originalValues[input.name] = input.value;
+        });
+
+        editBtn.addEventListener('click', function () {
+            inputs.forEach(input => {
+                input.readOnly = false;
+                input.disabled = false;
+            });
+            editBtn.style.display = 'none';
+            saveButtons.style.display = 'flex';
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            inputs.forEach(input => {
+                input.value = originalValues[input.name];
+                input.readOnly = true;
+                input.disabled = true;
+            });
+            editBtn.style.display = 'block';
+            saveButtons.style.display = 'none';
+        });
+
+        // Password Change Functionality
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
+        const passwordSection = document.getElementById('passwordSection');
+        let isPasswordSectionVisible = false;
+
+        changePasswordBtn.addEventListener('click', function () {
+            isPasswordSectionVisible = !isPasswordSectionVisible;
+            passwordSection.style.display = isPasswordSectionVisible ? 'block' : 'none';
+            changePasswordBtn.textContent = isPasswordSectionVisible ? 'Hide Password Change' : 'Change Password';
+        });
+
+        // Form validation
+        form.addEventListener('submit', function (e) {
+            const phone = document.getElementById('phone').value;
+            if (!phone.match(/^\d{10,}$/)) {
+                e.preventDefault();
+                showNotification('Please enter a valid phone number (at least 10 digits)', 'error');
+                return;
+            }
+
+            const age = document.getElementById('age').value;
+            if (age) {
+                const ageNum = parseInt(age);
+                if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
+                    e.preventDefault();
+                    showNotification('Please enter a valid age (0-120)', 'error');
+                    return;
+                }
+            }
+
+            // Password validation if password section is visible
+            if (isPasswordSectionVisible) {
+                const newPassword = document.getElementById('new_password').value;
+                const confirmPassword = document.getElementById('confirm_password').value;
+                const currentPassword = document.getElementById('current_password').value;
+
+                if (!currentPassword) {
+                    e.preventDefault();
+                    showNotification('Please enter your current password', 'error');
+                    return;
+                }
+                if (!newPassword) {
+                    e.preventDefault();
+                    showNotification('Please enter a new password', 'error');
+                    return;
+                }
+                if (!confirmPassword) {
+                    e.preventDefault();
+                    showNotification('Please confirm your new password', 'error');
+                    return;
+                }
+                if (newPassword !== confirmPassword) {
+                    e.preventDefault();
+                    showNotification('New passwords do not match', 'error');
+                    return;
+                }
+                if (newPassword.length < 6) {
+                    e.preventDefault();
+                    showNotification('Password must be at least 6 characters long', 'error');
+                    return;
+                }
+            }
+        });
+
+        // Feedback Modal Functionality
+        const feedbackBtn = document.getElementById('feedbackBtn');
+        const feedbackModal = document.getElementById('feedbackModal');
+        const closeBtn = document.querySelector('.close');
+        const cancelFeedbackBtn = document.getElementById('cancelFeedback');
+        const feedbackForm = document.getElementById('feedbackForm');
+
+        feedbackBtn.addEventListener('click', function () {
+            feedbackModal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', function () {
+            feedbackModal.style.display = 'none';
+        });
+
+        cancelFeedbackBtn.addEventListener('click', function () {
+            feedbackModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === feedbackModal) {
+                feedbackModal.style.display = 'none';
+            }
+        });
+
+        // File size validation
+        const feedbackFile = document.getElementById('feedbackFile');
+        feedbackFile.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (file.size > maxSize) {
+                    showNotification('File size exceeds 5MB limit', 'error');
+                    this.value = '';
+                }
+            }
+        });
+
+        // Form submission
+        feedbackForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Feedback submitted successfully', 'success');
+                        feedbackModal.style.display = 'none';
+                        feedbackForm.reset();
+                    } else {
+                        showNotification(data.message || 'Error submitting feedback', 'error');
+                    }
+                })
+                .catch(error => {
+                    showNotification('Error submitting feedback', 'error');
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

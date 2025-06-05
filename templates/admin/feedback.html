@@ -1,0 +1,274 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Feedback Management - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="section-header">
+        <h2>Feedback Management</h2>
+        <div class="filters">
+            <select id="statusFilter" class="filter-select">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+            </select>
+            <select id="typeFilter" class="filter-select">
+                <option value="all">All Types</option>
+                <option value="feedback">Feedback</option>
+                <option value="complaint">Complaint</option>
+                <option value="suggestion">Suggestion</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="feedback-list">
+        {% for feedback in feedback_list %}
+        <div class="feedback-card" data-status="{{ feedback.status }}" data-type="{{ feedback.type }}">
+            <div class="feedback-header">
+                <div class="feedback-type {{ feedback.type }}">
+                    {{ feedback.type|title }}
+                </div>
+                <div class="feedback-status {{ feedback.status }}">
+                    {{ feedback.status|title }}
+                </div>
+            </div>
+            <div class="feedback-date">
+                {{ feedback.created_at }}
+            </div>
+            <div class="feedback-rating">
+                <div class="stars">
+                    {% for i in range(5) %}
+                    {% if feedback.rating and i < feedback.rating %} <span class="star filled">★</span>
+                        {% else %}
+                        <span class="star">☆</span>
+                        {% endif %}
+                        {% endfor %}
+                </div>
+                {% if feedback.rating %}
+                <span class="rating-value">{{ feedback.rating }}/5</span>
+                {% endif %}
+            </div>
+            <div class="feedback-message">
+                {{ feedback.message }}
+            </div>
+            {% if feedback.file_path %}
+            <div class="feedback-attachment">
+                <a href="{{ url_for('static', filename=feedback.file_path) }}" target="_blank">
+                    <i class="fas fa-paperclip"></i> View Attachment
+                </a>
+            </div>
+            {% endif %}
+            <div class="feedback-actions">
+                <select class="status-select" data-feedback-id="{{ feedback._id }}">
+                    <option value="pending" {% if feedback.status=='pending' %}selected{% endif %}>Pending</option>
+                    <option value="in_progress" {% if feedback.status=='in_progress' %}selected{% endif %}>In Progress
+                    </option>
+                    <option value="resolved" {% if feedback.status=='resolved' %}selected{% endif %}>Resolved</option>
+                </select>
+                <button class="btn btn-primary" onclick="updateStatus('{{ feedback._id }}')">Update Status</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .feedback-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .feedback-type {
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+
+    .feedback-type.feedback {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .feedback-type.complaint {
+        background: #ffebee;
+        color: #d32f2f;
+    }
+
+    .feedback-type.suggestion {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .feedback-status {
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+
+    .feedback-status.pending {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    .feedback-status.in_progress {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .feedback-status.resolved {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .feedback-date {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+
+    .feedback-rating {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .stars {
+        display: flex;
+        gap: 2px;
+    }
+
+    .star {
+        color: #ddd;
+        font-size: 24px;
+        cursor: default;
+    }
+
+    .star.filled {
+        color: #ffd700;
+    }
+
+    .rating-value {
+        background: #f5f5f5;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .feedback-message {
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .feedback-attachment {
+        margin-bottom: 15px;
+    }
+
+    .feedback-attachment a {
+        color: #1976d2;
+        text-decoration: none;
+    }
+
+    .feedback-attachment a:hover {
+        text-decoration: underline;
+    }
+
+    .feedback-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .status-select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background: #1976d2;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #1565c0;
+    }
+
+    .filters {
+        display: flex;
+        gap: 10px;
+    }
+
+    .filter-select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: white;
+    }
+</style>
+
+<script>
+    function updateStatus(feedbackId) {
+        const select = document.querySelector(`.status-select[data-feedback-id="${feedbackId}"]`);
+        const newStatus = select.value;
+
+        fetch(`/admin/feedback/${feedbackId}/update`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `status=${newStatus}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const card = select.closest('.feedback-card');
+                    const statusBadge = card.querySelector('.feedback-status');
+                    statusBadge.className = `feedback-status ${newStatus}`;
+                    statusBadge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Filter functionality
+    document.getElementById('statusFilter').addEventListener('change', filterFeedback);
+    document.getElementById('typeFilter').addEventListener('change', filterFeedback);
+
+    function filterFeedback() {
+        const statusFilter = document.getElementById('statusFilter').value;
+        const typeFilter = document.getElementById('typeFilter').value;
+        const cards = document.querySelectorAll('.feedback-card');
+
+        cards.forEach(card => {
+            const status = card.dataset.status;
+            const type = card.dataset.type;
+            const statusMatch = statusFilter === 'all' || status === statusFilter;
+            const typeMatch = typeFilter === 'all' || type === typeFilter;
+            card.style.display = statusMatch && typeMatch ? 'block' : 'none';
+        });
+    }
+</script>
+{% endblock %}

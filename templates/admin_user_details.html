@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0D8ABC;
+            --secondary-color: #0B7AAB;
+            --light-blue: #E3F2FD;
+            --text-color: #333;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .user-header {
+            margin-bottom: 2rem;
+        }
+
+        .user-header h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .user-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: var(--text-color);
+        }
+
+        .user-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            color: var(--text-color);
+        }
+
+        .linked-users {
+            margin-top: 2rem;
+        }
+
+        .linked-user-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .linked-user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .linked-user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .linked-user-role {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: var(--light-blue);
+            color: var(--primary-color);
+        }
+
+        .linked-user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">AgeWell Admin</div>
+        <div class="nav-links">
+            <a href="{{ url_for('admin_dashboard') }}" class="nav-link">Dashboard</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div id="notification" class="notification"></div>
+
+    <div class="container">
+        <a href="{{ url_for('admin_dashboard') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="user-header">
+            <h1>User Details</h1>
+        </div>
+
+        <div class="user-section">
+            <div class="section-header">
+                <h2>Basic Information</h2>
+            </div>
+            <div class="user-info">
+                <div class="info-group">
+                    <div class="info-label">Name</div>
+                    <div class="info-value">{{ user.name }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ user.email }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value">{{ user.phone }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Role</div>
+                    <div class="info-value">{{ user.role|title }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Gender</div>
+                    <div class="info-value">{{ user.gender|title }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Age</div>
+                    <div class="info-value">{{ user.age }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-section">
+            <div class="section-header">
+                <h2>Address Information</h2>
+            </div>
+            <div class="user-info">
+                <div class="info-group">
+                    <div class="info-label">Street Address</div>
+                    <div class="info-value">{{ user.address.street }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">City</div>
+                    <div class="info-value">{{ user.address.city }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">State</div>
+                    <div class="info-value">{{ user.address.state }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">PIN Code</div>
+                    <div class="info-value">{{ user.address.pincode }}</div>
+                </div>
+            </div>
+        </div>
+
+        {% if user.role == 'elder' and linked_children %}
+        <div class="user-section">
+            <div class="section-header">
+                <h2>Linked Family Members</h2>
+            </div>
+            <div class="linked-users">
+                {% for child in linked_children %}
+                <div class="linked-user-card">
+                    <div class="linked-user-header">
+                        <div class="linked-user-name">{{ child.name }}</div>
+                        <span class="linked-user-role">{{ child.role|title }}</span>
+                    </div>
+                    <div class="linked-user-details">
+                        <div class="info-group">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">{{ child.email }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">{{ child.phone }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Age</div>
+                            <div class="info-value">{{ child.age }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value">{{ child.gender|title }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.role == 'child' and user.elder_id %}
+        <div class="user-section">
+            <div class="section-header">
+                <h2>Linked Elder</h2>
+            </div>
+            <div class="linked-users">
+                <div class="linked-user-card">
+                    <div class="linked-user-header">
+                        <div class="linked-user-name">{{ linked_elder.name }}</div>
+                        <span class="linked-user-role">{{ linked_elder.role|title }}</span>
+                    </div>
+                    <div class="linked-user-details">
+                        <div class="info-group">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">{{ linked_elder.email }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">{{ linked_elder.phone }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Age</div>
+                            <div class="info-value">{{ linked_elder.age }}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value">{{ linked_elder.gender|title }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            if (type === 'error') {
+                notification.style.background = '#dc3545';
+            } else if (type === 'info') {
+                notification.style.background = '#17a2b8';
+            } else {
+                notification.style.background = '#28a745';
+            }
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Show any flash messages
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        showNotification('{{ message }}', '{{ category }}');
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+
+</html>

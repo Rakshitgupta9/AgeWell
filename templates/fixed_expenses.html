@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+
+{% block title %}Fixed Expenses - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .expenses-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .expenses-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .expenses-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .expenses-title i {
+        font-size: 2rem;
+        color: #2D8CFF;
+    }
+
+    .expenses-description {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .expenses-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .add-expense-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .expenses-list-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #2D8CFF;
+        outline: none;
+    }
+
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background: #2D8CFF;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: 100%;
+    }
+
+    .submit-btn:hover {
+        background: #1a7ae8;
+    }
+
+    .expenses-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .expense-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        transition: background 0.3s;
+        border-left: 4px solid transparent;
+    }
+
+    .expense-item:hover {
+        background: #f8f9fa;
+    }
+
+    .expense-item.due-soon {
+        border-left-color: #ffc107;
+        background-color: #fff8e1;
+    }
+
+    .expense-item.overdue {
+        border-left-color: #dc3545;
+        background-color: #fff5f5;
+    }
+
+    .expense-item.paid {
+        border-left-color: #28a745;
+        background-color: #f0fff4;
+    }
+
+    .expense-details {
+        flex: 1;
+    }
+
+    .expense-name {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+
+    .expense-description {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .expense-amount {
+        font-weight: 600;
+        color: #2D8CFF;
+        margin-left: 1rem;
+    }
+
+    .expense-date {
+        font-size: 0.8rem;
+        color: #999;
+        margin-top: 0.25rem;
+    }
+
+    .expense-frequency {
+        font-size: 0.8rem;
+        color: #666;
+        background: #f8f9fa;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        margin-top: 0.25rem;
+    }
+
+    .expense-summary {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .summary-title {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .summary-item {
+        text-align: center;
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .summary-item h3 {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-item p {
+        color: #2D8CFF;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 1rem;
+        transition: color 0.3s;
+    }
+
+    .back-btn:hover {
+        color: #2D8CFF;
+    }
+
+    .delete-btn {
+        color: #dc3545;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-left: 1rem;
+        transition: color 0.3s;
+    }
+
+    .delete-btn:hover {
+        color: #c82333;
+    }
+
+    .payment-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 1rem;
+    }
+
+    .payment-toggle {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+    }
+
+    .payment-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .payment-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 20px;
+    }
+
+    .payment-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked+.payment-slider {
+        background-color: #28a745;
+    }
+
+    input:checked+.payment-slider:before {
+        transform: translateX(20px);
+    }
+
+    .payment-label {
+        font-size: 0.8rem;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="expenses-container">
+    <a href="{{ url_for('finance_management') }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Finance Management
+    </a>
+
+    <div class="expenses-header">
+        <div class="expenses-title">
+            <i class="fas fa-calendar-alt"></i>
+            <h1>Fixed Expenses</h1>
+        </div>
+        <p class="expenses-description">Manage your recurring expenses and monthly bills</p>
+    </div>
+
+    <div class="expenses-grid">
+        <!-- Add Expense Form -->
+        <div class="add-expense-section">
+            <h2>Add New Fixed Expense</h2>
+            <form id="expenseForm" method="POST" action="{{ url_for('add_fixed_expense') }}">
+                <div class="form-group">
+                    <label for="expenseName">Expense Name</label>
+                    <input type="text" id="expenseName" name="expenseName" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseAmount">Amount (₹)</label>
+                    <input type="number" id="expenseAmount" name="expenseAmount" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategory">Category</label>
+                    <select id="expenseCategory" name="expenseCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="rent">Rent</option>
+                        <option value="insurance">Insurance</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="subscription">Subscriptions</option>
+                        <option value="loan">Loan Payments</option>
+                        <option value="tax">Taxes</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseFrequency">Frequency</label>
+                    <select id="expenseFrequency" name="expenseFrequency" required>
+                        <option value="">Select Frequency</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDescription">Description</label>
+                    <textarea id="expenseDescription" name="expenseDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDate">Due Date</label>
+                    <input type="date" id="expenseDate" name="expenseDate" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus"></i>
+                    Add Fixed Expense
+                </button>
+            </form>
+        </div>
+
+        <!-- Expenses List -->
+        <div class="expenses-list-section">
+            <h2>Fixed Expenses</h2>
+            <ul class="expenses-list">
+                {% for expense in expenses %}
+                <li
+                    class="expense-item {% if expense.is_paid %}paid{% elif expense.is_overdue %}overdue{% elif expense.is_due_soon %}due-soon{% endif %}">
+                    <div class="expense-details">
+                        <div class="expense-name">{{ expense.name }}</div>
+                        <div class="expense-description">{{ expense.description }}</div>
+                        <div class="expense-frequency">{{ expense.frequency }}</div>
+                        <div class="expense-date">Due: {{ expense.date.strftime('%B %d, %Y') }}</div>
+                    </div>
+                    <div class="expense-amount">₹{{ expense.amount }}</div>
+                    <div class="payment-status">
+                        <label class="payment-toggle">
+                            <input type="checkbox" {% if expense.is_paid %}checked{% endif %}
+                                onchange="updatePaymentStatus('{{ expense._id }}', this.checked)">
+                            <span class="payment-slider"></span>
+                        </label>
+                        <span class="payment-label">{% if expense.is_paid %}Paid{% else %}Unpaid{% endif %}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteExpense('{{ expense._id }}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Monthly Summary -->
+    <div class="expense-summary">
+        <h2 class="summary-title">Monthly Summary</h2>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <h3>Total Fixed Expenses</h3>
+                <p>₹{{ monthly_total }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Monthly Average</h3>
+                <p>₹{{ monthly_average }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Highest Expense Category</h3>
+                <p>{{ highest_category }}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Upcoming Due</h3>
+                <p>{{ next_due_date }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function deleteExpense(expenseId) {
+        if (confirm('Are you sure you want to delete this expense?')) {
+            fetch(`/delete-fixed-expense/${expenseId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting expense: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error deleting expense');
+                });
+        }
+    }
+
+    function updatePaymentStatus(expenseId, isPaid) {
+        fetch(`/update-payment-status/${expenseId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ is_paid: isPaid })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error updating payment status: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating payment status');
+            });
+    }
+
+    // Set default date to today
+    document.getElementById('expenseDate').valueAsDate = new Date();
+</script>
+{% endblock %}

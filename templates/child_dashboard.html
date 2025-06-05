@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+
+{% block title %}Child Dashboard - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2D8CFF;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .nav-brand:hover {
+        color: #1a7ae8;
+    }
+
+    .nav-brand i {
+        font-size: 1.8rem;
+    }
+
+    .elder-info-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .elder-info-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .elder-info-header i {
+        font-size: 2rem;
+        color: #2D8CFF;
+    }
+
+    .elder-info-header h2 {
+        margin: 0;
+        color: #333;
+    }
+
+    .elder-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-item label {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .detail-item span {
+        color: #333;
+        font-weight: 500;
+    }
+
+    .activity-section {
+        margin-top: 2rem;
+    }
+
+    .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .activity-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .activity-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .activity-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .activity-header i {
+        font-size: 1.5rem;
+        color: #2D8CFF;
+    }
+
+    .activity-header h3 {
+        margin: 0;
+        color: #333;
+    }
+
+    .activity-content {
+        color: #666;
+    }
+
+    .activity-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+    }
+
+    .activity-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+    .activity-item .status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+    }
+
+    .status.upcoming {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .status.completed {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status.pending {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="nav-brand">
+        <i class="fas fa-heartbeat"></i>
+        AgeWell
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    {% if linked_elder %}
+    <!-- Elder Information Card -->
+    <div class="elder-info-card">
+        <div class="elder-info-header">
+            <i class="fas fa-user"></i>
+            <h2>{{ linked_elder.name }}'s Information</h2>
+        </div>
+        <div class="elder-details">
+            <div class="detail-item">
+                <label>Age</label>
+                <span>{{ linked_elder.age }} years</span>
+            </div>
+            <div class="detail-item">
+                <label>Phone</label>
+                <span>{{ linked_elder.phone }}</span>
+            </div>
+            <div class="detail-item">
+                <label>Email</label>
+                <span>{{ linked_elder.email }}</span>
+            </div>
+            <div class="detail-item">
+                <label>Address</label>
+                <span>{{ linked_elder.address.street }}, {{ linked_elder.address.city }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activities Section -->
+    <div class="activity-section">
+        <div class="activity-grid">
+            <!-- Events Card -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Upcoming Events</h3>
+                </div>
+                <div class="activity-content">
+                    {% if elder_events %}
+                    <ul class="activity-list">
+                        {% for event in elder_events %}
+                        <li class="activity-item">
+                            <div>
+                                <strong>{{ event.name }}</strong>
+                                <div>{{ event.datetime.strftime('%B %d, %Y at %I:%M %p') }}</div>
+                            </div>
+                            <span class="status upcoming">Upcoming</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No upcoming events</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Medicines Card -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-pills"></i>
+                    <h3>Medicine Schedule</h3>
+                </div>
+                <div class="activity-content">
+                    {% if today_medicines %}
+                    <ul class="activity-list">
+                        {% for medicine in today_medicines %}
+                        <li class="activity-item">
+                            <div>
+                                <strong>{{ medicine.medicine_name }}</strong>
+                                <div>{{ medicine.dosage }} - {{ medicine.time }}</div>
+                            </div>
+                            <span class="status {{ 'completed' if medicine.is_taken else 'pending' }}">
+                                {{ 'Taken' if medicine.is_taken else 'Pending' }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No medicines scheduled for today</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Reminders Card -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-bell"></i>
+                    <h3>Recent Reminders</h3>
+                </div>
+                <div class="activity-content">
+                    {% if elder_reminders %}
+                    <ul class="activity-list">
+                        {% for reminder in elder_reminders %}
+                        <li class="activity-item">
+                            <div>
+                                <strong>{{ reminder.title }}</strong>
+                                <div>{{ reminder.date }} at {{ reminder.time }}</div>
+                            </div>
+                            <span class="status {{ 'completed' if reminder.completed else 'pending' }}">
+                                {{ 'Completed' if reminder.completed else 'Pending' }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No recent reminders</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Finance Summary Card -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-wallet"></i>
+                    <h3>Finance Summary</h3>
+                </div>
+                <div class="activity-content">
+                    {% if finance_summary %}
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div>Monthly Expenses</div>
+                            <span>₹{{ finance_summary.total_monthly_expenses }}</span>
+                        </li>
+                        <li class="activity-item">
+                            <div>Paid Expenses</div>
+                            <span>₹{{ finance_summary.total_paid_expenses }}</span>
+                        </li>
+                        <li class="activity-item">
+                            <div>Pending Expenses</div>
+                            <span>₹{{ finance_summary.pending_fixed_total }}</span>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <p>No financial data available</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Emergency Calls Card -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Recent Emergency Calls</h3>
+                </div>
+                <div class="activity-content">
+                    {% if emergency_logs %}
+                    <ul class="activity-list">
+                        {% for log in emergency_logs %}
+                        <li class="activity-item">
+                            <div>
+                                <strong>{{ log.contact_type }}</strong>
+                                <div>{{ log.created_at.strftime('%B %d, %Y at %I:%M %p') }}</div>
+                            </div>
+                            <span class="status emergency">Emergency</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No recent emergency calls</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="elder-info-card">
+        <div class="elder-info-header">
+            <i class="fas fa-exclamation-circle"></i>
+            <h2>No Elder Account Linked</h2>
+        </div>
+        <p>Please contact the administrator to link your account with an elder's account.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

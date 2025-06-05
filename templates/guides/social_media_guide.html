@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Social Media Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    .platform-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+        color: #1877f2;
+    }
+
+    .platform-icon.instagram {
+        color: #e4405f;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fas fa-share-alt"></i>
+            <h1>Social Media Guide</h1>
+        </div>
+        <p class="guide-description">Learn how to use popular social media platforms safely and effectively.</p>
+    </div>
+
+    <div class="guide-content">
+        <!-- Facebook Section -->
+        <section class="guide-section">
+            <h2><i class="fab fa-facebook platform-icon"></i>Facebook</h2>
+
+            <div class="guide-card">
+                <h3>Getting Started with Facebook</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Create your Facebook account</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Set up your profile</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/--Z5wLHSq5U" title="Creating a Facebook Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create a Facebook Account</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Basic Facebook Features</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Navigate the Facebook interface</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Use basic features</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/amhjrRHqKqE" title="Basic Facebook Features"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Basic Facebook Features Tutorial</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Facebook Security Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access security settings</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Configure privacy options</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/lN5KVeKq_-Y" title="Facebook Security Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Change Facebook Security Settings</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagram Section -->
+        <section class="guide-section">
+            <h2><i class="fab fa-instagram platform-icon instagram"></i>Instagram</h2>
+
+            <div class="guide-card">
+                <h3>Getting Started with Instagram</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Create your Instagram account</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Set up your profile</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/F1LSjfJ-6BQ" title="Creating Instagram Account"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Create an Instagram Account</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Using Instagram Feed</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Navigate your feed</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Interact with posts</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/2YSB468mn4M" title="Using Instagram Feed"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Use Instagram Feed</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Instagram Stories</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Create a story</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Add content to your story</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dv-3ufo_Sfo" title="Posting Instagram Stories"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Post Instagram Stories</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Instagram Direct Messages</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access your DMs</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Send and receive messages</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/B1b0pMc7BAI" title="Using Instagram DM"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Use Instagram Direct Messages</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Instagram Explore</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access the Explore page</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Discover new content</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/6dK6EH1adhI" title="Using Instagram Explore"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Use Instagram Explore</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Instagram Privacy and Security</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access privacy settings</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Configure security options</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/o44JF50rsJc" title="Instagram Privacy Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Change Privacy and Security Settings</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Making Your Account Private</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access account settings</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Enable private account</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/5kPT7H_7RMI" title="Making Instagram Account Private"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Make Your Instagram Account Private</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgeWell - Empowering Senior Citizens</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💙</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to AgeWell</h1>
+            <p class="hero-subtitle">Empowering senior citizens with technology, community, and care</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('register') }}" class="cta-button primary-button">Get Started</a>
+                <a href="{{ url_for('login') }}" class="cta-button secondary-button">Sign In</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-grid">
+            <!-- Social Events Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">Social Events & Community Fun</h3>
+                <p class="feature-description">Connect with peers, join local events, and participate in community
+                    activities designed for seniors.</p>
+            </div>
+
+            <!-- Learning Corner Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="feature-title">Learning Corner</h3>
+                <p class="feature-description">Master technology with our easy-to-follow tutorials and tech literacy
+                    programs.</p>
+            </div>
+
+            <!-- Finance Manager Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3 class="feature-title">Personal Finance Manager</h3>
+                <p class="feature-description">Track expenses, manage bills, and maintain financial independence with
+                    our secure tools.</p>
+            </div>
+
+            <!-- Emergency Help Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h3 class="feature-title">Emergency Help</h3>
+                <p class="feature-description">Quick access to emergency services with live location sharing for
+                    immediate assistance.</p>
+            </div>
+
+            <!-- Family Integration Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <h3 class="feature-title">Family Integration</h3>
+                <p class="feature-description">Stay connected with family members through our secure and easy-to-use
+                    platform.</p>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 class="feature-title">Secure Profile</h3>
+                <p class="feature-description">Manage your personal information securely with our advanced privacy
+                    features.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Button -->
+    <a href="#" class="emergency-button" id="emergencyButton">
+        <i class="fas fa-phone-alt"></i>
+    </a>
+
+    <script>
+        // Emergency Button Click Handler
+        document.getElementById('emergencyButton').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    // Here you would typically send the location to your emergency contact system
+                    alert('Emergency services have been notified with your location. Help is on the way!');
+                }, function (error) {
+                    alert('Unable to get your location. Please call emergency services directly.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser. Please call emergency services directly.');
+            }
+        });
+    </script>
+</body>
+
+</html>

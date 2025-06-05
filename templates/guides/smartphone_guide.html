@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Smartphone Basics Guide - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guides.css') }}">
+<style>
+    .video-container {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+    }
+
+    .video-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <div class="nav-brand">AgeWell</div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="guide-container">
+    <div class="guide-header">
+        <div class="guide-title">
+            <i class="fas fa-mobile-alt"></i>
+            <h1>Smartphone Basics Guide</h1>
+        </div>
+        <p class="guide-description">Learn essential smartphone skills and features for everyday use.</p>
+    </div>
+
+    <div class="guide-content">
+        <section class="guide-section">
+            <h2>Home Screen Basics</h2>
+            <div class="guide-card">
+                <h3>Understanding Your Home Screen</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Learn about app icons and widgets</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Understand the notification bar</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Navigate between home screens</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/W4NeW_9FQd0" title="Home Screen Basics"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Understanding Your Home Screen</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Basic Settings</h2>
+            <div class="guide-card">
+                <h3>WiFi Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Access WiFi settings</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Connect to available networks</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Manage saved networks</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/HdhdG_sdYiw" title="WiFi Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: How to Manage WiFi Settings</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Sound Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Adjust volume levels</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Set ringtone and notification sounds</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Manage sound profiles</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/X9tL5AvjIE8" title="Sound Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Managing Sound Settings</div>
+                </div>
+            </div>
+
+            <div class="guide-card">
+                <h3>Display Settings</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Adjust brightness</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Change wallpaper</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Set screen timeout</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/nFDxI2LeAqw" title="Display Settings"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Customizing Display Settings</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Using Apps</h2>
+            <div class="guide-card">
+                <h3>App Management</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Install new apps</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Organize apps</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Update and uninstall apps</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/tbYXoK1Iqko" title="Using Apps"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Managing Your Apps</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Camera Features</h2>
+            <div class="guide-card">
+                <h3>Using Your Camera</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Take photos and videos</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Use different camera modes</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Access camera settings</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VxT_prQELAY" title="Camera Features"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Using Your Smartphone Camera</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="guide-section">
+            <h2>Security Features</h2>
+            <div class="guide-card">
+                <h3>Device Security</h3>
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Set up screen lock</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Configure fingerprint or face recognition</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>Manage security settings</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/shND98EOtzw" title="Security Features"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <div class="video-title">Watch: Setting Up Security Features</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="guide-navigation">
+        <a href="{{ url_for('learning_corner') }}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Learning Corner
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,710 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - AgeWell{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2D8CFF;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .nav-brand:hover {
+        color: #1a7ae8;
+    }
+
+    .nav-brand i {
+        font-size: 1.8rem;
+    }
+
+    .emergency-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 100;
+    }
+
+    .emergency-btn:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+    }
+
+    .emergency-btn i {
+        font-size: 1.3rem;
+    }
+
+    .emergency-options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .emergency-option {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        gap: 1rem;
+    }
+
+    .emergency-option.disabled {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .emergency-option i {
+        font-size: 1.5rem;
+        color: #dc3545;
+    }
+
+    .emergency-option.disabled i {
+        color: #856404;
+    }
+
+    .option-details {
+        flex: 1;
+    }
+
+    .option-details h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .option-details p {
+        margin: 0.25rem 0 0;
+        color: #6c757d;
+    }
+
+    .call-btn {
+        padding: 0.5rem 1rem;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .call-btn.emergency {
+        background: #dc3545;
+    }
+
+    .call-btn:hover {
+        opacity: 0.9;
+    }
+
+    .phone-number {
+        margin-left: auto;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+    }
+
+    .modal-content h2 {
+        color: #333;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .close {
+        position: absolute;
+        right: 1.5rem;
+        top: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .close:hover {
+        color: #333;
+    }
+
+    .emergency-option.disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .emergency-option.disabled:hover {
+        background-color: #f8f9fa;
+    }
+
+    .emergency-option .phone-number {
+        margin-left: auto;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .emergency-option .phone-number.warning {
+        color: #dc3545;
+    }
+
+    /* Add these new styles for the tip card and modal */
+    .tip-content {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .tip-category {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        color: #2D8CFF;
+    }
+
+    .tip-category i {
+        font-size: 1.5rem;
+    }
+
+    .tip-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #333;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .tip-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .tip-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        background: #2D8CFF;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-btn:hover {
+        background: #1a7ae8;
+    }
+
+    .tip-btn i {
+        font-size: 1rem;
+    }
+
+    #tipPreview {
+        min-height: 3em;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="nav-brand">
+        <i class="fas fa-heartbeat"></i>
+        AgeWell
+    </a>
+    <div class="nav-links">
+        <div class="notifications-dropdown">
+            <button class="notification-btn" onclick="toggleNotifications()">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge" id="notificationCount">0</span>
+            </button>
+            <div class="notifications-menu" id="notificationsMenu">
+                <div class="notifications-header">
+                    <h3>Notifications</h3>
+                    <button class="mark-all-read" onclick="markAllAsRead()">Mark all as read</button>
+                </div>
+                <div class="notifications-list" id="notificationsList">
+                    <!-- Notifications will be populated here -->
+                    <div class="no-notifications">No new notifications</div>
+                </div>
+            </div>
+        </div>
+        <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    <div class="welcome-section">
+        <h1>Welcome, {{ user.name }}!</h1>
+        <p>Explore our services and stay connected with your community.</p>
+    </div>
+
+    <div class="features-grid">
+        <!-- Social Events Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Social Events</h3>
+            <p>Join community events and connect with others.</p>
+            <a href="{{ url_for('social_events') }}" class="feature-btn">View Events</a>
+        </div>
+
+        <!-- Learning Corner Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Learning Corner</h3>
+            <p>Enhance your tech skills and stay updated with the digital world.</p>
+            <a href="{{ url_for('learning_corner') }}" class="feature-btn">Start Learning</a>
+        </div>
+
+        <!-- Finance Manager Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <h3>Finance Manager</h3>
+            <p>Track your expenses and manage your finances effectively.</p>
+            <a href="{{ url_for('finance_management') }}" class="feature-btn">Manage Finances</a>
+        </div>
+
+        <!-- Reminders Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <h3>Reminders</h3>
+            <p>Set reminders for important tasks and appointments.</p>
+            <a href="{{ url_for('reminders') }}" class="feature-btn">Set Reminders</a>
+        </div>
+
+        <!-- Medicine Updates Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-pills"></i>
+            </div>
+            <h3>Medicine Updates</h3>
+            <p>Track your medications and get timely reminders.</p>
+            <a href="{{ url_for('medicine_management') }}" class="feature-btn">Manage Medicines</a>
+        </div>
+
+        <!-- Daily Tip Card -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Daily Tip</h3>
+            <p id="tipPreview">Get your daily dose of wisdom and helpful tips.</p>
+            <button onclick="showDailyTip()" class="feature-btn">Get Today's Tip</button>
+        </div>
+    </div>
+
+    <!-- Emergency Button -->
+    <button class="emergency-btn" onclick="showEmergencyOptions()">
+        <i class="fas fa-phone-alt"></i>
+        Emergency Help
+    </button>
+</div>
+
+<!-- Emergency Contact Modal -->
+<div id="emergencyModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Emergency Contact Options</h2>
+        <div class="emergency-options">
+            {% if emergency_contact.phone %}
+            <div class="emergency-option">
+                <i class="fas fa-user"></i>
+                <div class="option-details">
+                    <h3>Call {{ emergency_contact.name }}</h3>
+                    <p>{{ emergency_contact.phone }}</p>
+                </div>
+                <button onclick="callContact('{{ emergency_contact.phone }}', '{{ emergency_contact.name }}')"
+                    class="call-btn">
+                    <i class="fas fa-phone"></i> Call
+                </button>
+            </div>
+            {% else %}
+            <div class="emergency-option disabled">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="option-details">
+                    <h3>No Emergency Contact Set</h3>
+                    <p>Please link a child's account or update your profile with an emergency contact</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="emergency-option">
+                <i class="fas fa-ambulance"></i>
+                <div class="option-details">
+                    <h3>Call Emergency Services</h3>
+                    <p>112</p>
+                </div>
+                <button onclick="callContact('112', 'Emergency Services')" class="call-btn emergency">
+                    <i class="fas fa-phone"></i> Call
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Daily Tip Modal -->
+<div id="tipModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTipModal()">&times;</span>
+        <h2>Today's Tip</h2>
+        <div class="tip-content">
+            <div class="tip-category">
+                <i id="tipIcon" class="fas fa-heartbeat"></i>
+                <span id="tipCategory">Health Tip</span>
+            </div>
+            <p id="tipText" class="tip-text"></p>
+            <div class="tip-actions">
+                <button onclick="getNewTip()" class="tip-btn">
+                    <i class="fas fa-sync-alt"></i> New Tip
+                </button>
+                <button onclick="saveTip()" class="tip-btn">
+                    <i class="fas fa-bookmark"></i> Save Tip
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function showEmergencyOptions() {
+        const modal = document.getElementById('emergencyModal');
+        modal.style.display = 'block';
+    }
+
+    function closeEmergencyModal() {
+        const modal = document.getElementById('emergencyModal');
+        modal.style.display = 'none';
+    }
+
+    function callChild(phoneNumber) {
+        if (phoneNumber) {
+            window.location.href = `tel:${phoneNumber}`;
+        } else {
+            showNoEmergencyContact();
+        }
+    }
+
+    function showNoEmergencyContact() {
+        alert('No emergency contact is set. Please update your profile with emergency contact information or link a child\'s account.');
+    }
+
+    function callEmergencyServices() {
+        if (confirm('Are you sure you want to call emergency services (112)?')) {
+            window.location.href = 'tel:112';
+        }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+        const modal = document.getElementById('emergencyModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Notifications functionality
+    function toggleNotifications() {
+        const menu = document.getElementById('notificationsMenu');
+        menu.classList.toggle('show');
+    }
+
+    function markAllAsRead() {
+        // Add your mark all as read logic here
+        const notifications = document.querySelectorAll('.notification-item');
+        notifications.forEach(notification => {
+            notification.classList.remove('unread');
+        });
+        updateNotificationCount(0);
+    }
+
+    function updateNotificationCount(count) {
+        const badge = document.getElementById('notificationCount');
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'block' : 'none';
+    }
+
+    // Close notifications when clicking outside
+    document.addEventListener('click', function (event) {
+        const menu = document.getElementById('notificationsMenu');
+        const btn = document.querySelector('.notification-btn');
+        if (!menu.contains(event.target) && !btn.contains(event.target)) {
+            menu.classList.remove('show');
+        }
+    });
+
+    // Example notification data (replace with your actual data)
+    const notifications = [
+        {% if today_medicines %}
+    {% for medicine in today_medicines %}
+    {
+        id: "medicine_{{ loop.index }}",
+            message: "Medicine Reminder: {{ medicine.medicine_name }} at {{ medicine.time }}",
+                time: "Today",
+                    type: "medicine",
+                        unread: true
+    },
+    {% endfor %}
+    {% endif %}
+    {% if upcoming_reminders %}
+    {% for reminder in upcoming_reminders %}
+    {
+        id: "reminder_{{ loop.index }}",
+            message: "Reminder: {{ reminder.title }} on {{ reminder.date }} at {{ reminder.time }}",
+                time: "Upcoming",
+                    type: "reminder",
+                        unread: true
+    },
+    {% endfor %}
+    {% endif %}
+    {% if upcoming_bills %}
+    {% for bill in upcoming_bills %}
+    {
+        id: "bill_{{ loop.index }}",
+            message: "Bill Due: {{ bill.name }} - ₹{{ bill.amount }} due on {{ bill.due_date }}",
+                time: "Due Soon",
+                    type: "bill",
+                        unread: true
+    },
+    {% endfor %}
+    {% endif %}
+    ];
+
+    // Populate notifications
+    function populateNotifications() {
+        const list = document.getElementById('notificationsList');
+        const noNotifications = document.querySelector('.no-notifications');
+
+        if (notifications.length === 0) {
+            noNotifications.style.display = 'block';
+            return;
+        }
+
+        noNotifications.style.display = 'none';
+        list.innerHTML = notifications.map(notification => `
+            <div class="notification-item ${notification.unread ? 'unread' : ''}" onclick="markAsRead('${notification.id}')">
+                <div class="notification-content">
+                    <p>${notification.message}</p>
+                    <span class="notification-time">${notification.time}</span>
+                </div>
+                ${notification.unread ? '<div class="unread-dot"></div>' : ''}
+            </div>
+        `).join('');
+
+        updateNotificationCount(notifications.filter(n => n.unread).length);
+    }
+
+    function markAsRead(id) {
+        const notification = notifications.find(n => n.id === id);
+        if (notification) {
+            notification.unread = false;
+            populateNotifications();
+        }
+    }
+
+    // Initialize notifications
+    populateNotifications();
+
+    function callContact(phoneNumber, contactType) {
+        if (confirm(`Are you sure you want to call ${contactType}?`)) {
+            // Create emergency log
+            fetch('/create-emergency-log', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contact_type: contactType,
+                    phone_number: phoneNumber
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = `tel:${phoneNumber}`;
+                    } else {
+                        alert('Error creating emergency log. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error creating emergency log. Please try again.');
+                });
+        }
+    }
+
+    // Add these new functions for tip functionality
+    const tipCategories = {
+        health: {
+            icon: 'fa-heartbeat',
+            tips: [
+                "Stay hydrated! Aim to drink 8 glasses of water daily.",
+                "Take regular breaks from sitting - stand up and stretch every 30 minutes.",
+                "Practice deep breathing exercises for 5 minutes daily to reduce stress.",
+                "Include more fruits and vegetables in your daily diet.",
+                "Get 7-8 hours of sleep for optimal health.",
+                "Regular walking can improve heart health and mood.",
+                "Keep your mind active with puzzles or reading.",
+                "Maintain good posture while sitting to prevent back pain."
+            ]
+        },
+        tech: {
+            icon: 'fa-laptop',
+            tips: [
+                "Use voice commands on your smartphone for easier navigation.",
+                "Enable two-factor authentication for better security.",
+                "Keep your apps and software updated for better performance.",
+                "Use password managers to securely store your passwords.",
+                "Learn to use video calling apps to stay connected with family.",
+                "Enable emergency SOS features on your smartphone.",
+                "Use digital calendars for medication reminders.",
+                "Explore accessibility features on your devices for better usability."
+            ]
+        },
+        platform: {
+            icon: 'fa-info-circle',
+            tips: [
+                "You can set up multiple emergency contacts in your profile.",
+                "Use the calendar feature to schedule all your appointments.",
+                "Enable notifications to never miss important reminders.",
+                "Connect with family members to share your health updates.",
+                "Use the finance tracker to monitor your monthly expenses.",
+                "Join community events to stay socially active.",
+                "Check the learning corner for new tech tutorials.",
+                "Update your medicine schedule regularly for accurate reminders."
+            ]
+        },
+        news: {
+            icon: 'fa-newspaper',
+            tips: [
+                "Stay updated with local senior citizen programs and benefits.",
+                "Check for new healthcare policies that might benefit you.",
+                "Follow reliable health news sources for accurate information.",
+                "Keep track of important dates for pension and benefits.",
+                "Stay informed about community events in your area.",
+                "Learn about new technologies designed for seniors.",
+                "Follow updates about senior-friendly public services.",
+                "Stay informed about weather alerts and health advisories."
+            ]
+        }
+    };
+
+    let currentTip = null;
+    let savedTips = [];
+
+    function showDailyTip() {
+        const modal = document.getElementById('tipModal');
+        modal.style.display = 'block';
+        if (!currentTip) {
+            getNewTip();
+        }
+    }
+
+    function closeTipModal() {
+        const modal = document.getElementById('tipModal');
+        modal.style.display = 'none';
+    }
+
+    function getNewTip() {
+        const categories = Object.keys(tipCategories);
+        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+        const categoryTips = tipCategories[randomCategory].tips;
+        const randomTip = categoryTips[Math.floor(Math.random() * categoryTips.length)];
+
+        currentTip = {
+            category: randomCategory,
+            text: randomTip
+        };
+
+        updateTipDisplay();
+    }
+
+    function updateTipDisplay() {
+        if (currentTip) {
+            const category = tipCategories[currentTip.category];
+            document.getElementById('tipIcon').className = `fas ${category.icon}`;
+            document.getElementById('tipCategory').textContent =
+                currentTip.category.charAt(0).toUpperCase() + currentTip.category.slice(1) + ' Tip';
+            document.getElementById('tipText').textContent = currentTip.text;
+            document.getElementById('tipPreview').textContent = currentTip.text;
+        }
+    }
+
+    function saveTip() {
+        if (currentTip && !savedTips.some(tip => tip.text === currentTip.text)) {
+            savedTips.push(currentTip);
+            // Here you can add code to save the tip to the backend
+            alert('Tip saved successfully!');
+        } else {
+            alert('This tip is already saved!');
+        }
+    }
+
+    // Initialize with a random tip when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        getNewTip();
+    });
+
+    // Close tip modal when clicking outside
+    window.onclick = function (event) {
+        const tipModal = document.getElementById('tipModal');
+        const emergencyModal = document.getElementById('emergencyModal');
+        if (event.target == tipModal) {
+            tipModal.style.display = 'none';
+        }
+        if (event.target == emergencyModal) {
+            emergencyModal.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}
