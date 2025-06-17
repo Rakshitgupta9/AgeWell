@@ -218,4 +218,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-For support, please email support@agewell.com or open an issue in the GitHub repository. 
+For support, please email guptarakshit9858@gmail.com or open an issue in the GitHub repository. 
