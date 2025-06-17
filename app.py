@@ -95,7 +95,7 @@ def index():
             flash('Error loading dashboard', 'error')
     return render_template('index.html')
 
-@app.route('/dashboard')
+@app.route('/db')
 @login_required
 def dashboard():
     try:
@@ -156,7 +156,7 @@ def dashboard():
         flash('Error loading dashboard', 'error')
         return redirect(url_for('index'))
 
-@app.route('/child-dashboard')
+@app.route('cd')
 @login_required
 def child_dashboard():
     try:
