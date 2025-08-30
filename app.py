@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret key
-app.config['MONGO_URI'] = 'mongodb+srv://rakshit:agewell@cluster0.svixdcm.mongodb.net/agewell?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = 'your-url'
 
 mongo = PyMongo(app)
 
