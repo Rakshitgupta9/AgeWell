@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret key
-app.config['MONGO_URI'] = 'your-url'
+app.config['MONGO_URI'] = 'mongodb+srv://rakshit:agewell@cluster0.svixdcm.mongodb.net/agewell?retryWrites=true&w=majority'
 
 mongo = PyMongo(app)
 
@@ -25,11 +25,11 @@ try:
         print("Created events collection")
     
     # Create indexes for better performance
-    mongo.db.events.crfeate_index([('datetime', 1)])
+    mongo.db.events.create_index([('datetime', 1)])
     mongo.db.events.create_index([('organizer_id', 1)])
     print("Created necessary indexes")
 except Exception as e:
-    print(f"Error connecting to MonfgoDB: {str(e)}")
+    print(f"Error connecting to MongoDB: {str(e)}")
     print(f"Error type: {type(e)}")
     import traceback
     print(f"Traceback: {traceback.format_exc()}")
@@ -84,9 +84,9 @@ def index():
             user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
             if user:
                 if user['role'] == 'child':
-                    return reddirect(url_for('child_dashboard'))
+                    return redirect(url_for('child_dashboard'))
                 else:
-                    emergency_contact = get_efmergency_contact(user)
+                    emergency_contact = get_emergency_contact(user)
                     return render_template('dashboard.html', 
                                          user=user,
                                          emergency_contact=emergency_contact)
@@ -124,12 +124,12 @@ def dashboard():
         }).sort('time', 1))
         
         # Get upcoming reminders (next 3 days)
-        three_days_latfer = today + timedelta(days=3)
+        three_days_later = today + timedelta(days=3)
         upcoming_reminders = list(mongo.db.reminders.find({
             'user_id': ObjectId(session['user_id']),
             'completed': False,
             'date': {
-                '$gte': tfoday.strftime('%Y-%m-%d'),
+                '$gte': today.strftime('%Y-%m-%d'),
                 '$lte': three_days_later.strftime('%Y-%m-%d')
             }
         }).sort([('date', 1), ('time', 1)]))
@@ -176,9 +176,9 @@ def child_dashboard():
                     'participants': ObjectId(user['elder_id'])
                 }).sort('datetime', 1))
                 
-                # Get eldfer's today's medicines
+                # Get elder's today's medicines
                 today = datetime.now()
-                today_stafrt = datetime.combine(today.date(), datetime.min.time())
+                today_start = datetime.combine(today.date(), datetime.min.time())
                 today_end = datetime.combine(today.date(), datetime.max.time())
                 
                 today_medicines = list(mongo.db.medicine_schedule.find({
@@ -198,7 +198,7 @@ def child_dashboard():
                 # Get elder's finance summary
                 finance_summary = {
                     'total_monthly_expenses': 0,
-                    'totavl_paid_expenses': 0,
+                    'total_paid_expenses': 0,
                     'pending_fixed_total': 0
                 }
                 
@@ -219,7 +219,7 @@ def child_dashboard():
                 }))
                 
                 paid_fixed = sum(expense['amount'] for expense in fixed_expenses if expense.get('is_paid', False))
-                total_fixed = sum(expense['amouvnt'] for expense in fixed_expenses)
+                total_fixed = sum(expense['amount'] for expense in fixed_expenses)
                 
                 finance_summary['total_paid_expenses'] = finance_summary['total_monthly_expenses'] + paid_fixed
                 finance_summary['pending_fixed_total'] = total_fixed - paid_fixed
@@ -234,7 +234,7 @@ def child_dashboard():
                 # Clean up old emergency logs
                 cleanup_old_emergency_logs()
                 
-                return render_template('child_dvashboard.html',
+                return render_template('child_dashboard.html',
                                      user=user,
                                      linked_elder=linked_elder,
                                      elder_events=elder_events,
