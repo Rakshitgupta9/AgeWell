@@ -81,7 +81,7 @@ AgeWell is a comprehensive web-based platform designed to empower elderly indivi
 
 2. **Clone the Repository**
    ```bash
-   git clone https://github.com/Rakshitgupta9/AgeWell-A-Smart-Portal-for-Senior-Citizen-Support.git
+   git clone https://github.com/Rakshitgupta9/AgeWell.git
    cd agewell
    ```
 
